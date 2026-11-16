@@ -14,6 +14,9 @@ import { Reveal } from "@/components/reveal";
 import { ExternalButton, InternalButton } from "@/components/buttons";
 import { trialLink, academy } from "@/lib/academy";
 
+// Ensures Next.js revalidates the page on cache refreshes
+export const revalidate = 60;
+
 export const metadata: Metadata = {
     title: {
         absolute: "Badminton Blog & Articles | Celestial's Academy Noida",
@@ -34,6 +37,19 @@ export const metadata: Metadata = {
             "Explore training insights, equipment advice, player pathways, and news from Celestial's Badminton Academy in Sector 104, Noida.",
     },
 };
+
+function formatDate(dateStr?: string | null): string | null {
+    if (!dateStr) return null;
+    try {
+        return new Date(dateStr).toLocaleDateString("en-US", {
+            month: "short",
+            day: "numeric",
+            year: "numeric",
+        });
+    } catch {
+        return dateStr;
+    }
+}
 
 export default async function BlogPage() {
     const posts = await getPosts();
@@ -73,7 +89,13 @@ export default async function BlogPage() {
                                 const postUrl = `/blog/${post.slug}`;
                                 const category = post.category || "Badminton Training";
                                 const authorName = post.author?.name || "Celestial Coaching Team";
-                                const dateDisplay = post.date || post.publishedAt || post.createdAt;
+
+                                // ✅ 1. Safe image resolution: checks post.cover?.src from CMS
+                                const imageUrl = post.cover?.src;
+                                const imageAlt = post.cover?.alt || post.title;
+
+                                // ✅ 2. Formatted date (e.g. "Nov 16, 2026")
+                                const dateDisplay = formatDate(post.publishedAt || (post as any).date);
 
                                 return (
                                     <Reveal key={post.id ?? post.slug ?? idx} delay={idx * 0.05}>
@@ -85,12 +107,12 @@ export default async function BlogPage() {
                                             />
 
                                             <div>
-                                                {/* Optional thumbnail image */}
-                                                {(post.coverImage || post.image) && (
+                                                {/* Post Cover Image */}
+                                                {imageUrl && (
                                                     <div className="relative mb-5 aspect-[16/10] overflow-hidden rounded-2xl bg-court-900">
                                                         <img
-                                                            src={post.coverImage || post.image}
-                                                            alt={post.title}
+                                                            src={imageUrl}
+                                                            alt={imageAlt}
                                                             className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                                                             loading="lazy"
                                                         />
@@ -208,5 +230,4 @@ export default async function BlogPage() {
     );
 }
 
-// Export named and default so imports work in both formats
 export { BlogPage };
