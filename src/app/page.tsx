@@ -19,7 +19,8 @@ import { Results } from "@/components/home/results";
 // import { FindUs } from "@/components/home/find-us";
 import InstagramEmbed from "@/components/home/InstagramEmbed";
 import { FaqHome } from "@/components/faq-home";
-
+// ✅ Correct
+import BlogPage from "@/app/blog/page";
 /* SEO metadata */
 export const metadata: Metadata = {
   title: {
@@ -52,7 +53,9 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <BlogPage />
       <QuickFacts />
+
       <StartingPoints />
       <PathwaySteps />
       {/* <ProgramsSlider /> */}
