@@ -19,20 +19,34 @@ export interface Post {
   tags?: string[];
 }
 
-const CMS_BASE_URL =
-  process.env.CMS_URL || "https://cms-website-mu.vercel.app/api/v1";
+function getCmsBaseUrl(): string {
+  let url = (process.env.CMS_URL || "https://cms-website-mu.vercel.app/api/v1").trim();
+  // Strip trailing slashes
+  url = url.replace(/\/+$/, "");
+  // Automatically ensure /api/v1 is present
+  if (!url.endsWith("/api/v1")) {
+    url = `${url}/api/v1`;
+  }
+  return url;
+}
 
 export async function getPosts(): Promise<Post[]> {
+  const baseUrl = getCmsBaseUrl();
+  const siteKey = (process.env.CMS_SITE_KEY ?? "").trim();
+
   try {
-    const res = await fetch(`${CMS_BASE_URL}/posts`, {
+    const res = await fetch(`${baseUrl}/posts`, {
       headers: {
-        Authorization: `Bearer ${process.env.CMS_SITE_KEY ?? ""}`,
+        Authorization: `Bearer ${siteKey}`,
       },
       next: { revalidate: 60 },
     });
 
     if (!res.ok) {
-      console.warn(`[CMS] Failed to fetch posts: HTTP ${res.status}`);
+      console.warn(`[CMS] Failed to fetch posts from ${baseUrl}/posts: HTTP ${res.status} (${res.statusText})`);
+      if (res.status === 401) {
+        console.warn("[CMS] 401 Unauthorized: Please check your CMS_SITE_KEY environment variable.");
+      }
       return [];
     }
 
@@ -48,16 +62,19 @@ export async function getPosts(): Promise<Post[]> {
 }
 
 export async function getPostBySlug(slug: string): Promise<Post | null> {
+  const baseUrl = getCmsBaseUrl();
+  const siteKey = (process.env.CMS_SITE_KEY ?? "").trim();
+
   try {
-    const res = await fetch(`${CMS_BASE_URL}/posts/${slug}`, {
+    const res = await fetch(`${baseUrl}/posts/${slug}`, {
       headers: {
-        Authorization: `Bearer ${process.env.CMS_SITE_KEY ?? ""}`,
+        Authorization: `Bearer ${siteKey}`,
       },
       next: { revalidate: 60 },
     });
 
     if (!res.ok) {
-      console.warn(`[CMS] Failed to fetch post "${slug}": HTTP ${res.status}`);
+      console.warn(`[CMS] Failed to fetch post "${slug}": HTTP ${res.status} (${res.statusText})`);
       return null;
     }
 
