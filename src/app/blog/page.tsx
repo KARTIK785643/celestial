@@ -91,7 +91,7 @@ export default async function BlogPage() {
                                 const authorName = post.author?.name || "Celestial Coaching Team";
 
                                 // ✅ 1. Safe image resolution: checks post.cover?.src from CMS
-                                const imageUrl = post.cover?.src;
+                                const imageUrl = post.cover?.src || (post as any).coverImage;
                                 const imageAlt = post.cover?.alt || post.title;
 
                                 // ✅ 2. Formatted date (e.g. "Nov 16, 2026")
