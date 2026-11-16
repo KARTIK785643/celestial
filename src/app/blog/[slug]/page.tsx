@@ -107,8 +107,13 @@ export default async function ArticlePage({ params }: PageProps) {
     const dateDisplay = formatDate(post.publishedAt || (post as any).date);
     const category = post.category || "Academy Insights";
 
-    // ✅ 3. CRITICAL: Read HTML from post.body.html
-    const contentHtml = post.body?.html || "";
+    // ✅ 3. Safely extract HTML content from any CMS field variation:
+    const contentHtml =
+        (typeof post.body === "string" ? post.body : post.body?.html) ||
+        (post as any).bodyHtml ||
+        (post as any).content ||
+        (post as any).html ||
+        "";
 
     // ✅ 4. Dynamic reading time from CMS
     const readingTime = post.readingMinutes ? `${post.readingMinutes} min read` : "4 min read";
