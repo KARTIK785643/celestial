@@ -5,10 +5,7 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { academy } from "@/lib/academy";
 import { MotionProvider } from "@/components/motion-provider";
-<<<<<<< HEAD
 import Script from "next/script";
-=======
->>>>>>> 2e5bb2da01c56114268408d36b054c99a181f9d0
 
 const archivo = Archivo({
   variable: "--font-archivo",
@@ -31,11 +28,8 @@ const siteUrl =
       ? `https://${process.env.VERCEL_URL}`
       : "https://celestialbadmintonacademy.com/");
 
-<<<<<<< HEAD
 
       //meta data for the site, including title, description, keywords, open graph, twitter card, and robots meta tags
-=======
->>>>>>> 2e5bb2da01c56114268408d36b054c99a181f9d0
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
@@ -111,10 +105,6 @@ const jsonLd = {
     latitude: academy.address.lat,
     longitude: academy.address.lng,
   },
-<<<<<<< HEAD
-=======
-  // ⭐ This enables the 4.4 Gold Star Rating in Google search results:
->>>>>>> 2e5bb2da01c56114268408d36b054c99a181f9d0
   aggregateRating: {
     "@type": "AggregateRating",
     ratingValue: "4.4",
@@ -157,7 +147,6 @@ const jsonLd = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en-IN" data-scroll-behavior="smooth" className={`${archivo.variable} ${mono.variable} antialiased`}>
-<<<<<<< HEAD
      
       <head>
         <meta name="google-site-verification" content="fGXRTk2GKDOIJ92z1HU-D2wJiTgipTduGqC1Md1roJ4" />
@@ -188,9 +177,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }}
         />
 
-=======
-      <body className="min-h-dvh flex flex-col">
->>>>>>> 2e5bb2da01c56114268408d36b054c99a181f9d0
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-accent focus:px-5 focus:py-3 focus:font-semibold focus:text-ink"
