@@ -1,0 +1,34 @@
+/*
+ * Admin pages render inside the root layout (app/layout.tsx), which also draws the public
+ * site's chrome. Hide that chrome while an admin page is on screen, so no public file has to
+ * change. Loaded only by app/admin/layout.tsx.
+ *
+ * If the public pages are ever moved into a (site) route group, the chrome rule below can go:
+ * the admin would then get no public chrome in the first place.
+ */
+body:has([data-admin-root]) > a[href="#main"],
+body:has([data-admin-root]) > header,
+body:has([data-admin-root]) > footer,
+body:has([data-admin-root]) > a[href^="https://wa.me/"] {
+  display: none;
+}
+
+/*
+ * Entry animation for admin sections, pages, menus and popups: opacity only, no movement.
+ * It also replays when a hidden editor section is shown again (display: none restarts animations).
+ */
+.admin-fade {
+  animation: admin-fade 220ms ease-out both;
+}
+
+@keyframes admin-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .admin-fade {
+    animation: none;
+  }
+}

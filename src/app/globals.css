@@ -1,0 +1,525 @@
+@import "tailwindcss";
+
+
+@theme {
+  --animate-nudge: nudge 1.6s ease-in-out infinite;
+  --animate-nudge-left: nudge-left 1.6s ease-in-out infinite;
+  --animate-arrow-ring: arrow-ring 2s ease-out infinite;
+
+  @keyframes nudge {
+
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+
+    50% {
+      transform: translateX(3px);
+    }
+  }
+
+  @keyframes nudge-left {
+
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+
+    50% {
+      transform: translateX(-3px);
+    }
+  }
+
+  @keyframes arrow-ring {
+    0% {
+      transform: scale(1);
+      opacity: 0.5;
+    }
+
+    100% {
+      transform: scale(1.7);
+      opacity: 0;
+    }
+  }
+}
+
+/*
+ * Palette is taken from the CBA logo — the source of truth (client direction, 21 Oct 2026).
+ * Logo colours: teal #03989E, black, grey #545454, white. Everything below is that set or
+ * a tint/shade of the logo teal (same hue, ~182°):
+ *   court-*  = deep shades of the logo teal (dark sections)
+ *   mat      = the logo teal itself; accent = the logo teal, used for the primary action
+ *              (with black text: 5.4:1 — white text on this teal fails at 3.5:1)
+ *   mat-deep = teal darkened for small text on white (5.5:1); mat-soft = teal tint for dark bg
+ *   chalk    = logo white; chalk-2 = white with a breath of teal
+ *   ink      = logo black (a hair off pure black); ink-soft = the logo's grey #545454
+ */
+@theme {
+  --color-court-950: #041a1b;
+  --color-court-900: #072628;
+  --color-court-800: #0b3436;
+  --color-court-700: #10464a;
+  --color-mat: #03989e;
+  --color-mat-soft: #74c6ca;
+  --color-mat-deep: #03757a;
+  /* logo teal darkened for small text on white: 5.5:1 */
+  --color-chalk: #ffffff;
+  --color-chalk-2: #edf5f5;
+  --color-ink: #0b1213;
+  --color-ink-soft: #545454;
+  --color-accent: #03989e;
+  --color-accent-deep: #03757a;
+  --color-cork: #9aa3a3;
+  /* neutral grey ("closed" status) */
+
+  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  --radius-pill: 999px;
+  --ease-flight: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --animate-marquee: marquee 38s linear infinite;
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+
+    to {
+      transform: translateX(-50%);
+    }
+  }
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--color-chalk);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-variation-settings: "wdth" 100;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  .on-light :focus-visible,
+  .on-light:focus-visible {
+    outline-color: var(--color-ink);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+
+  /* Condensed display type: Archivo at its narrowest width axis. */
+  .display {
+    font-variation-settings: "wdth" 62;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 0.9;
+  }
+
+  .display-wide {
+    font-variation-settings: "wdth" 112;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* Buttons — pill shape follows the client's moodboard (Notion "Buttons"). */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-height: 48px;
+    padding: 0 1.4rem;
+    border-radius: var(--radius-pill);
+    font-weight: 600;
+    font-size: 0.975rem;
+    line-height: 1;
+    white-space: nowrap;
+    transition: transform 200ms var(--ease-flight), background-color 200ms, color 200ms, border-color 200ms;
+  }
+
+  .btn:active {
+    transform: translateY(1px) scale(0.985);
+  }
+
+  .btn-primary {
+    background: var(--color-accent);
+    color: var(--color-ink);
+  }
+
+  .btn-primary:hover {
+    background: #2bb3b8;
+  }
+
+  .btn-ghost-dark {
+    color: var(--color-chalk);
+    box-shadow: inset 0 0 0 1.5px rgb(255 255 255 / 0.45);
+  }
+
+  .btn-ghost-dark:hover {
+    box-shadow: inset 0 0 0 1.5px var(--color-chalk);
+    background: rgb(255 255 255 / 0.06);
+  }
+
+  .btn-ink {
+    background: var(--color-ink);
+    color: var(--color-chalk);
+  }
+
+  .btn-ink:hover {
+    background: var(--color-court-800);
+  }
+
+  .btn-ghost-light {
+    color: var(--color-ink);
+    box-shadow: inset 0 0 0 1.5px rgb(11 18 19 / 0.35);
+  }
+
+  .btn-ghost-light:hover {
+    box-shadow: inset 0 0 0 1.5px var(--color-ink);
+  }
+
+  .btn-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    margin-right: -0.75rem;
+    border-radius: 999px;
+    background: var(--color-ink);
+    color: var(--color-accent);
+    transition: transform 300ms var(--ease-flight);
+  }
+
+  /* .btn:hover .btn-icon {
+    transform: translateX(2px) rotate(-45deg);
+  } */
+  /* 
+  .btn-ink .btn-icon {
+    background: var(--color-accent);
+    color: var(--color-ink);
+  } */
+
+  /* Court-line rule: the recurring brand device (2px chalk line with a service-line tick). */
+  .court-rule {
+    position: relative;
+    height: 2px;
+    background: currentColor;
+    opacity: 0.22;
+  }
+
+  /* String-bed texture (racket strings) — used once, behind the trial CTA. */
+  .strings {
+    background-image:
+      linear-gradient(to right, rgb(255 255 255 / 0.07) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(255 255 255 / 0.07) 1px, transparent 1px);
+    background-size: 14px 14px;
+  }
+
+  .link-underline {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1.5px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 300ms var(--ease-flight);
+  }
+
+  .link-underline:hover,
+  .link-underline:focus-visible {
+    background-size: 100% 1.5px;
+  }
+}
+
+/* ---------- Hero choreography (CSS so the headline paints before hydration: good for LCP) ---------- */
+@keyframes rise-line {
+  from {
+    transform: translateY(105%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes photo-in {
+  from {
+    transform: scale(0.97);
+  }
+
+  to {
+    transform: none;
+  }
+}
+
+.rise-line {
+  animation: rise-line 900ms var(--ease-flight) both;
+}
+
+@keyframes drop-in {
+  from {
+    transform: translateY(0.18em);
+  }
+
+  to {
+    transform: none;
+  }
+}
+
+.drop-in {
+  animation: drop-in 800ms var(--ease-flight) both;
+}
+
+.rise-in {
+  animation: rise-in 700ms var(--ease-flight) both;
+}
+
+.photo-in {
+  animation: photo-in 1000ms var(--ease-flight) both;
+}
+
+.court-line {
+  transition: transform 700ms var(--ease-flight), opacity 300ms ease;
+}
+
+.strip-item {
+  transition: opacity 500ms ease, transform 600ms var(--ease-flight);
+}
+
+.strip-off .strip-item {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.strip-on .strip-item {
+  opacity: 1;
+  transform: none;
+}
+
+.strip-on .strip-item:nth-child(2) {
+  transition-delay: 90ms;
+}
+
+.strip-on .strip-item:nth-child(3) {
+  transition-delay: 180ms;
+}
+
+.strip-on .strip-item:nth-child(4) {
+  transition-delay: 270ms;
+}
+
+/* If JS never runs, the strip must still be readable. */
+@media (scripting: none) {
+  .strip-off .strip-item {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- Scroll reveal: CSS scroll-driven, progressive enhancement ---------- */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: reveal-rise linear both;
+      animation-timeline: view();
+      animation-range: entry calc(0% + var(--reveal-offset, 0%)) entry calc(30% + var(--reveal-offset, 0%));
+    }
+  }
+}
+
+@keyframes reveal-rise {
+  from {
+    transform: translateY(36px);
+  }
+
+  to {
+    transform: none;
+  }
+}
+
+/* ---------- Pathway dots on phones: hollow until the scroll-linked shuttle lands on them ---------- */
+@media (max-width: 1023.98px) {
+  .path-dot:not([data-lit]) {
+    background: var(--color-chalk-2);
+    box-shadow: inset 0 0 0 2px rgb(11 18 19 / 0.28);
+  }
+
+  .path-dot[data-lit]::after {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: 999px;
+    border: 2px solid var(--color-mat);
+    animation: dot-hit 520ms var(--ease-flight) forwards;
+  }
+}
+
+@keyframes dot-hit {
+  from {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+
+  to {
+    transform: scale(3.2);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .path-dot[data-lit]::after {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+/* Location map: label centred over the pin; pin drops in once when the map scrolls into view
+   (data-armed is set by JS, so without JS the pin is simply shown). */
+.loc-map .map-pin {
+  transform: translateX(-50%);
+}
+
+.loc-map .map-label {
+  transform: translateX(-50%);
+}
+
+.loc-map .map-ping {
+  opacity: 0;
+}
+
+.loc-map[data-armed] .map-pin,
+.loc-map[data-armed] .map-label {
+  opacity: 0;
+}
+
+.loc-map[data-seen] .map-pin {
+  animation: pin-drop 760ms var(--ease-flight) forwards;
+}
+
+.loc-map[data-seen] .map-label {
+  animation: label-in 420ms ease-out 620ms forwards;
+}
+
+.loc-map[data-seen] .map-ping {
+  animation: map-ping 2s ease-out 700ms infinite;
+}
+
+@keyframes pin-drop {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -70px);
+  }
+
+  55% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+
+  72% {
+    transform: translate(-50%, -10px);
+  }
+
+  86% {
+    transform: translate(-50%, 0);
+  }
+
+  93% {
+    transform: translate(-50%, -3px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@keyframes label-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@keyframes map-ping {
+  0% {
+    transform: scale(0.3);
+    opacity: 0.9;
+  }
+
+  100% {
+    transform: scale(1.7);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loc-map .map-ping {
+    animation: none;
+    opacity: 0.5;
+  }
+}
+
+/* Dark sections (coaching loop): hollow dots read against the dark teal, impact ring in the accent. */
+@media (max-width: 1023.98px) {
+  .path-dot-dark:not([data-lit]) {
+    background: var(--color-court-900);
+    box-shadow: inset 0 0 0 2px rgb(255 255 255 / 0.35);
+  }
+
+  .path-dot-dark[data-lit]::after {
+    border-color: var(--color-accent);
+  }
+}
