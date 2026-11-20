@@ -19,8 +19,13 @@ import { Results } from "@/components/home/results";
 // import { FindUs } from "@/components/home/find-us";
 import InstagramEmbed from "@/components/home/InstagramEmbed";
 import { FaqHome } from "@/components/faq-home";
+<<<<<<< HEAD
 import { LatestPosts } from "@/components/home/latest-posts";
 
+=======
+// ✅ Correct
+import BlogPage from "@/app/blog/page";
+>>>>>>> 2e5bb2da01c56114268408d36b054c99a181f9d0
 /* SEO metadata */
 export const metadata: Metadata = {
   title: {
@@ -53,7 +58,13 @@ export default function Home() {
   return (
     <>
       <Hero />
+<<<<<<< HEAD
       <QuickFacts />
+=======
+      <BlogPage />
+      <QuickFacts />
+
+>>>>>>> 2e5bb2da01c56114268408d36b054c99a181f9d0
       <StartingPoints />
       <PathwaySteps />
       {/* <ProgramsSlider /> */}
@@ -64,7 +75,10 @@ export default function Home() {
       <BookCourt />
       {/* <FindUs /> */}
       <CorporateTournaments />
+<<<<<<< HEAD
       <LatestPosts />
+=======
+>>>>>>> 2e5bb2da01c56114268408d36b054c99a181f9d0
       <FaqHome />
     </>
   );

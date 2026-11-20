@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # Celestial's Badminton Academy: website
+=======
+# Celestial's Badminton Academy — website
+>>>>>>> 2e5bb2da01c56114268408d36b054c99a181f9d0
 
 Next.js 16 · Tailwind CSS 4 · Framer Motion (lazy-loaded) · static export. Stack as specified in the client's Notion brief.
 

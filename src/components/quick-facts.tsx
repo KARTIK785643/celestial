@@ -29,8 +29,13 @@ export function QuickFacts() {
       icon: Clock,
       iconWeight: "bold",
       label: "Open Hours",
+<<<<<<< HEAD
       value: "Daily: 5 AM – 11 PM",
       detail: "Early morning drills or late-night games, pick your slot",
+=======
+      value: "Weekdays: 5 AM – 11 PM",
+      detail: "Tuesday: 5 AM–8 PM\nSat–Sun: 11 AM–9:15 PM",
+>>>>>>> 2e5bb2da01c56114268408d36b054c99a181f9d0
     },
     {
       icon: Wind,

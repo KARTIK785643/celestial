@@ -30,7 +30,11 @@ export function SiteHeader() {
     setOpen(false);
   }, [pathname]);
 
+<<<<<<< HEAD
   // Handle Escape and prevent background scrolling while the menu is open.
+=======
+  // Handle Escape and prevent background scrolling while menu is open.
+>>>>>>> 2e5bb2da01c56114268408d36b054c99a181f9d0
   useEffect(() => {
     if (!open) return;
 
@@ -76,7 +80,11 @@ export function SiteHeader() {
 
   return (
     <>
+<<<<<<< HEAD
       {/* Fixed navbar: stays at the top on every page */}
+=======
+      {/* Fixed navbar */}
+>>>>>>> 2e5bb2da01c56114268408d36b054c99a181f9d0
       <m.header
         className="fixed inset-x-0 top-0 z-40 px-3 pt-3 sm:px-5 sm:pt-4"
         initial={false}
@@ -86,7 +94,11 @@ export function SiteHeader() {
           aria-label="Main"
           className="mx-auto flex max-w-[1320px] items-center gap-2 rounded-full border border-white/10 bg-court-950/95 py-2 pl-4 pr-2 text-chalk shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_12px_30px_-18px_rgba(4,26,27,0.9)] backdrop-blur-md sm:pl-5 lg:bg-court-950/80"
         >
+<<<<<<< HEAD
           {/* Desktop Logo */}
+=======
+          {/* Logo */}
+>>>>>>> 2e5bb2da01c56114268408d36b054c99a181f9d0
           <Link
             href="/"
             onClick={(e) => handleNavClick(e, "/")}
@@ -310,7 +322,11 @@ export function SiteHeader() {
         )}
       </AnimatePresence>
 
+<<<<<<< HEAD
       {/* WhatsApp floating button: hidden when sidebar is open */}
+=======
+      {/* WhatsApp floating button: hidden while mobile menu is open */}
+>>>>>>> 2e5bb2da01c56114268408d36b054c99a181f9d0
       {!open && <WhatsAppFloat />}
     </>
   );
